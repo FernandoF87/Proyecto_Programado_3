@@ -70,11 +70,20 @@ def cambio(label):
 def main():
     global money
     root = Tk()
-    root.geometry("600x400+100+100")
+    root.geometry("700x600+100+100")
     root.title("Main menu")
+    root.resizable(False, False)
+    bg = load_img("bg.png")
+    machine = Canvas(root, width=500, height=600, borderwidth=0, highlightthickness=0, bg="black")
+    user = Canvas(root, width=200, height=600, borderwidth=0, highlightthickness=0, bg="#6AE1FF")
 
+    machine.create_image(0,0, anchor=NW, image=bg)
+
+    machine.place(x=0,y=0)
+    user.place(x=500,y=0)
+    
     label = Label(root, text=str(money), bg="red")
-    label.place(x=500, y=0)
+    label.place(x=550, y=0)
 
     coin = Coin(root, 500, 350, 50, False, label)
 

@@ -4,7 +4,7 @@ import time
 from threading import Thread
 
 on = True
-language = True
+language = True #Spanish as True, English as False
 money = 1000
 
 def load_img(name):
@@ -72,21 +72,89 @@ class Coin():
 
 
 class Machine():
-    def __init__(self, master, cost, label, label_money):
+    def __init__(self, master, label, label_money):
+        #self.init = False
+
+        up = load_img("up.png")
+        down = load_img("down.png")
+        enter = load_img("enter.png")
+        
+        self.string = ""
         self.master = master
         self.money = 0
-        self.cost = cost
+        self.costs = [50,100,200]
+        self.calidad = 0
+        self.calidades = ["NE","Baja","Media", "Alta"]
+        self.seleccion = ["consejo", "dicho","chiste"]
         self.label = label
         self.label_money = label_money
 
+        self.label_arrow = Label(self.master, text="->", fg="#38C3FF", bg="blue", font=("Fixedsys", 16))
+        self.arrow_pos = 1
+        self.current_y = 120
+        self.label_arrow.place(x=90,y=self.current_y)
+        
+        self.button_up = Button(self.master, image=up, command= self.up_arrow, relief=FLAT, width=40, height=40, bg="black")
+        self.button_down = Button(self.master, image=down, command= self.down_arrow, relief=FLAT, width=40, height=40, bg="black")
+        self.button_enter = Button(self.master, image=enter, command= self.purchase, relief=FLAT, width=60, height=30, bg="black")
+
+        self.button_up.image = up
+        self.button_down.image = down
+        self.button_enter.image = enter
+
+        self.button_up.place(x=430,y=120)
+        self.button_down.place(x=430,y=160)
+        self.button_enter.place(x=410,y=210)
+
+    def up_arrow(self):
+        if self.arrow_pos > 1:
+            self.arrow_pos -= 1
+            self.current_y -= 25
+            self.label_arrow.place(x=90,y=self.current_y)
+            
+    def down_arrow(self):
+        if self.arrow_pos < 3:
+            self.arrow_pos += 1
+            self.current_y += 25
+            self.label_arrow.place(x=90,y=self.current_y)
+            
+    def purchase(self):
+        if self.calidad > 0:
+            if self.money > self.costs[self.calidad-1]:
+                self.cambio(self.money-self.costs[self.calidad-1])
+            self.money = 0
+            
+            t_screen = Toplevel(self.master)
+            t_screen.geometry("100x50")
+            self.label_out = Label(t_screen, text=self.seleccion[self.arrow_pos-1]+" "+self.calidades[self.calidad], fg="black", bg="white")
+            self.label_out.place(x=0,y=0)
+
+            self.calidad = 0
+            self.string = "Monto actual:"+str(self.money)+"    Calidad: "+self.calidades[self.calidad]
+            self.update_text()
+            
+        else:
+            print("falta harina pa, va aflojando la mica")
+            
     def add_money(self, value):
         self.money += value
-        if self.money >= self.cost:
-            if self.money > self.cost:
-                self.cambio(self.money-self.cost)
-            self.money = 0
-            Toplevel(self.master)
-        self.label.config(text="₡" + str(self.money))
+        self.calidad = 0
+        for i in self.costs:
+            if self.money >= i:
+                #if self.money > i:
+                    #self.cambio(self.money-i)
+                self.calidad += 1
+            else:
+                break
+                
+        #self.money = 0
+        #Toplevel(self.master)
+        self.string = "Monto actual:"+str(self.money)+"    Calidad: "+self.calidades[self.calidad]
+        self.update_text()
+
+    def update_text(self):
+        self.label.config(text=self.string+"\n\n1.Consejos"+"\n\n2.Dichos"+"\n\n3.Chistes")
+        self.label.place(x=80,y=90)
 
     def cambio(self, value):
         coin = Coin(self.master, 350, 330, value, True, self.label, self.label_money, self)
@@ -105,18 +173,20 @@ def main():
 
     machine.place(x=0,y=0)
     user.place(x=500,y=0)
-    
-    label = Label(machine, text="₡ 0", bg="blue", width=18, height=3, font=("Haettenschweiler", 22))
-    label.place(x=60, y=89)
+
+    #₡
+    label = Label(machine, text="Bienvenido, \ninserte una moneda", fg="#38C3FF" ,bg="blue", font=("Fixedsys", 16))
 
     label_money = Label(machine, text="Dinero disponible: ₡ 1000", bg="#6AE1FF", font=("Haettenschweiler", 16))
-    label_money.place(x=0, y=0)
 
-    maquina = Machine(root, 200, label, label_money)
+    if on:
+        label.place(x=140, y=90)
+        label_money.place(x=0, y=0)
+        maquina = Machine(root, label, label_money)
 
-    coin = Coin(root, 520, 350, 50, False, label, label_money, maquina)
-    coin2 = Coin(root, 570, 350, 150, False, label, label_money, maquina)
-    coin3 = Coin(root, 620, 350, 250, False, label, label_money, maquina)
+    coin = Coin(root, 520, 350, 25, False, label, label_money, maquina)
+    coin2 = Coin(root, 570, 350, 50, False, label, label_money, maquina)
+    coin3 = Coin(root, 620, 350, 100, False, label, label_money, maquina)
 
     root.mainloop()
 

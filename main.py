@@ -3,6 +3,8 @@ import os
 import time
 from threading import Thread
 
+on = True
+language = True
 money = 1000
 
 def load_img(name):
@@ -68,7 +70,7 @@ def cambio(label):
     time.sleep(0.1)
 
 def main():
-    global money
+    global money, on
     root = Tk()
     root.geometry("700x600+100+100")
     root.title("Main menu")
@@ -84,7 +86,7 @@ def main():
     
     label = Label(root, text=str(money), bg="red")
     label.place(x=550, y=0)
-
+    
     coin = Coin(root, 500, 350, 50, False, label)
 
     root.mainloop()

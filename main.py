@@ -123,16 +123,7 @@ class Machine():
             if self.money > self.costs[self.calidad-1]:
                 self.cambio(self.money-self.costs[self.calidad-1])
             self.money = 0
-            
-            t_screen = Toplevel(self.master)
-            t_screen.geometry("100x50")
-            self.label_out = Label(t_screen, text=self.seleccion[self.arrow_pos-1]+" "+self.calidades[self.calidad], fg="black", bg="white")
-            self.label_out.place(x=0,y=0)
-
-            self.calidad = 0
-            self.string = "Monto actual:"+str(self.money)+"    Calidad: "+self.calidades[self.calidad]
-            self.update_text()
-            
+            self.create_thread()
         else:
             print("falta harina pa, va aflojando la mica")
             
@@ -141,14 +132,10 @@ class Machine():
         self.calidad = 0
         for i in self.costs:
             if self.money >= i:
-                #if self.money > i:
-                    #self.cambio(self.money-i)
                 self.calidad += 1
             else:
                 break
-                
-        #self.money = 0
-        #Toplevel(self.master)
+
         self.string = "Monto actual:"+str(self.money)+"    Calidad: "+self.calidades[self.calidad]
         self.update_text()
 
@@ -158,6 +145,40 @@ class Machine():
 
     def cambio(self, value):
         coin = Coin(self.master, 350, 330, value, True, self.label, self.label_money, self)
+
+    def create_thread(self):
+        thread = Thread(target=self.animation)
+        thread.daemon = True
+        thread.start()
+
+    def animation(self):
+        label = Label(self.master, bg="white", width=36, height=1)
+        label.place(x=110, y=500)
+        temp = 1
+        while temp < 10:
+            temp += 1
+            label.config(height=temp)
+            time.sleep(0.04)
+        label.destroy()
+
+        message = Message(self.master, self.seleccion[self.arrow_pos - 1], self.calidades[self.calidad])
+
+        self.calidad = 0
+        self.string = "Monto actual:" + str(self.money) + "    Calidad: " + self.calidades[self.calidad]
+        self.update_text()
+
+
+class Message():
+    def __init__(self, master, type, quality):
+        self.master = master
+        self.type = type
+        self.quality = quality
+
+        self.screen = Toplevel(self.master)
+        self.screen.geometry("255x100+300+300")
+        self.label_out = Label(self.screen, text=self.type + " " + self.quality, fg="black", bg="white")
+        self.label_out.place(x=0, y=0)
+
 
 def main():
     global money, on

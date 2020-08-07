@@ -4,8 +4,8 @@ import time
 from threading import Thread
 
 on = True
-language = True #Spanish as True, English as False
 money = 1000
+language = True #Spanish as True, English as False
 
 def load_img(name):
     if isinstance(name, str):
@@ -39,7 +39,7 @@ class Coin():
         thread.start()
 
     def move(self):
-        global money
+        global money, language
         tempx = self.x
         tempy = self.y
         run = True
@@ -60,20 +60,33 @@ class Coin():
                     self.button.place(x=self.x, y=self.y)
             self.machine.add_money(self.value)
             money -= self.value
+            if language:
+                self.money.config(text="Dinero disponible: ₡ " + str(money))
+            else:
+                self.money.config(text="Available money: ₡ " + str(money))
+        else:
+            print("Mirá capo estás re limpio, andate a la concha de tu vieja bld")
+    #Idea para eliminar los botones segun el dinero faltante
+    #if self.available < self.valor: kill
+    def erase(self):
+        global money, language
+        money += self.value
+        if language:
             self.money.config(text="Dinero disponible: ₡ " + str(money))
         else:
-            print("Mirá capo estás limpio")
-
-    def erase(self):
-        global money
-        money += self.value
-        self.money.config(text="Dinero disponible: ₡ " + str(money))
+            self.money.config(text="Available money: ₡ " + str(money))
         self.button.destroy()
 
+    def change_lan(self):
+        global money, language
+        if language:
+            self.money.config(text="Dinero disponible: ₡ " + str(money))
+        else:
+            self.money.config(text="Available money: ₡ " + str(money))
 
 class Machine():
     def __init__(self, master, label, label_money):
-        #self.init = False
+        self.init = False
 
         up = load_img("up.png")
         down = load_img("down.png")
@@ -84,8 +97,13 @@ class Machine():
         self.money = 0
         self.costs = [50,100,200]
         self.calidad = 0
-        self.calidades = ["NE","Baja","Media", "Alta"]
         self.seleccion = ["consejo", "dicho","chiste"]
+        
+        if language:
+            self.calidades = ["NE","Baja","Media", "Alta"]
+        else:
+            self.calidades = ["NE","Low","Regular", "High"]
+            
         self.label = label
         self.label_money = label_money
 
@@ -128,6 +146,8 @@ class Machine():
             print("falta harina pa, va aflojando la mica")
             
     def add_money(self, value):
+        global language
+        self.init = True
         self.money += value
         self.calidad = 0
         for i in self.costs:
@@ -135,13 +155,31 @@ class Machine():
                 self.calidad += 1
             else:
                 break
-
-        self.string = "Monto actual:"+str(self.money)+"    Calidad: "+self.calidades[self.calidad]
+        if language:
+            self.string = "Monto actual: "+str(self.money)+"   Calidad: "+self.calidades[self.calidad]
+        else:
+            self.string = "Current amount: "+str(self.money)+"  Quality: "+self.calidades[self.calidad]
         self.update_text()
 
     def update_text(self):
-        self.label.config(text=self.string+"\n\n1.Consejos"+"\n\n2.Dichos"+"\n\n3.Chistes")
+        global language
+        if language:
+            self.label.config(text=self.string+"\n\n1.Consejos"+"\n\n2.Dichos"+"\n\n3.Chistes")
+        else:
+            self.label.config(text=self.string+"\n\n1.Advice"+"\n\n2.Saying"+"\n\n3.Gag")
         self.label.place(x=80,y=90)
+
+    def reset(self):
+        global language
+        if language:
+            self.label.config(text="Bienvenido, \ninserte una moneda")
+        else:
+            self.label.config(text="Welcome, \ninsert a coin")
+        self.init = False
+        self.label.place(x=140, y=90)
+        self.arrow_pos = 1
+        self.current_y = 120
+        self.label_arrow.place(x=90,y=self.current_y)
 
     def cambio(self, value):
         coin = Coin(self.master, 350, 330, value, True, self.label, self.label_money, self)
@@ -162,11 +200,22 @@ class Machine():
         label.destroy()
 
         message = Message(self.master, self.seleccion[self.arrow_pos - 1], self.calidades[self.calidad])
-
         self.calidad = 0
-        self.string = "Monto actual:" + str(self.money) + "    Calidad: " + self.calidades[self.calidad]
-        self.update_text()
+        self.reset()
 
+    def change_lan(self):
+        global language  
+        if language:
+            self.calidades = ["NE","Baja","Media", "Alta"]
+            self.string = "Monto actual: "+str(self.money)+"   Calidad: "+self.calidades[self.calidad]
+        else:
+            self.calidades = ["NE","Low","Regular", "High"]
+            self.string = "Current amount: "+str(self.money)+"  Quality: "+self.calidades[self.calidad]
+            
+        if not self.init:
+            self.reset()
+        else: 
+            self.update_text()
 
 class Message():
     def __init__(self, master, type, quality):
@@ -181,15 +230,15 @@ class Message():
 
 
 def main():
-    global money, on
+    global money, on, language
     root = Tk()
     root.geometry("700x600+100+100")
     root.title("Main menu")
     root.resizable(False, False)
     bg = load_img("bg.png")
+    lan = load_img("lang.png")
     machine = Canvas(root, width=500, height=600, borderwidth=0, highlightthickness=0, bg="black")
     user = Canvas(root, width=200, height=600, borderwidth=0, highlightthickness=0, bg="#6AE1FF")
-
     machine.create_image(0,0, anchor=NW, image=bg)
 
     machine.place(x=0,y=0)
@@ -204,11 +253,28 @@ def main():
         label.place(x=140, y=90)
         label_money.place(x=0, y=0)
         maquina = Machine(root, label, label_money)
+            
+            
 
     coin = Coin(root, 520, 350, 25, False, label, label_money, maquina)
     coin2 = Coin(root, 570, 350, 50, False, label, label_money, maquina)
     coin3 = Coin(root, 620, 350, 100, False, label, label_money, maquina)
 
+    def change_lan():
+        global language
+        language = not language
+        if not language:
+            print("English")
+        else:
+            print("Spanish")
+        if on:
+            maquina.change_lan()
+            coin.change_lan()
+    #self.button_enter.place(x=410,y=210)
+    button_lan = Button(root, image=lan, command=change_lan, relief=FLAT, width=60, height=30, bg="black")
+    button_lan.image = lan
+    button_lan.place(x=410,y=50)
+    
     root.mainloop()
 
 main()

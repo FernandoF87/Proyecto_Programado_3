@@ -1,11 +1,12 @@
 from tkinter import *
-import os
-import time
+import os, time
+from datetime import datetime, date
 from threading import Thread
 
 on = True
 money = 1000
 language = True #Spanish as True, English as False
+transaccion = 1
 
 def load_img(name):
     if isinstance(name, str):
@@ -139,8 +140,8 @@ class Machine():
     def purchase(self):
         if self.calidad > 0:
             if self.money > self.costs[self.calidad-1]:
+                self.change = self.money-self.costs[self.calidad-1]
                 self.cambio(self.money-self.costs[self.calidad-1])
-            self.money = 0
             self.create_thread()
         else:
             print("falta harina pa, va aflojando la mica")
@@ -199,7 +200,9 @@ class Machine():
             time.sleep(0.04)
         label.destroy()
 
-        message = Message(self.master, self.seleccion[self.arrow_pos - 1], self.calidades[self.calidad])
+        message = Message(self.master, self.seleccion[self.arrow_pos - 1], self.calidades[self.calidad], self.money, self.change)
+        message.register_receipt()
+        self.money = 0
         self.calidad = 0
         self.reset()
 
@@ -218,16 +221,34 @@ class Machine():
             self.update_text()
 
 class Message():
-    def __init__(self, master, type, quality):
+    def __init__(self, master, type, quality, payment, change):
         self.master = master
         self.type = type
         self.quality = quality
-
+        self.number = 0
+        self.pay = payment
+        self.change = change
+        if self.quality == "Baja" or self.quality == "Low":
+            self.monto = 50
+        elif self.quality == "Media" or self.quality == "Regular":
+            self.monto = 100
+        else:
+            self.monto = 200
         self.screen = Toplevel(self.master)
         self.screen.geometry("255x100+300+300")
         self.label_out = Label(self.screen, text=self.type + " " + self.quality, fg="black", bg="white")
         self.label_out.place(x=0, y=0)
 
+    #def get_phrase(self):
+
+    def register_receipt(self):
+        global transaccion
+        self.date = datetime.now()
+        self.day = self.date.strftime("%d/%m/%Y")
+        self.time = self.date.strftime("%H:%M:")
+        self.string = str(transaccion)+"."+self.day+"."+self.time+"."+self.type+"."+str(self.monto)+"."+str(self.pay)+"."+str(self.change)+"\n"
+        print(self.string)
+        transaccion += 1
 
 def main():
     global money, on, language
@@ -237,6 +258,7 @@ def main():
     root.resizable(False, False)
     bg = load_img("bg.png")
     lan = load_img("lang.png")
+    admin = load_img("admin.png")
     machine = Canvas(root, width=500, height=600, borderwidth=0, highlightthickness=0, bg="black")
     user = Canvas(root, width=200, height=600, borderwidth=0, highlightthickness=0, bg="#6AE1FF")
     machine.create_image(0,0, anchor=NW, image=bg)
@@ -253,8 +275,6 @@ def main():
         label.place(x=140, y=90)
         label_money.place(x=0, y=0)
         maquina = Machine(root, label, label_money)
-            
-            
 
     coin = Coin(root, 520, 350, 25, False, label, label_money, maquina)
     coin2 = Coin(root, 570, 350, 50, False, label, label_money, maquina)
@@ -270,10 +290,40 @@ def main():
         if on:
             maquina.change_lan()
             coin.change_lan()
+
+
+    def pw_screen():
+        admin_s = Toplevel(root)
+        admin_s.geometry("300x300")
+        admin_s.resizable(False, False)
+        back_g = Canvas(admin_s, width=300, height=300, borderwidth=0, highlightthickness=0, bg="blue")
+        back_g.place(x=0,y=0)
+
+        title = Label(back_g, text="Administrator", fg="white", bg="Blue", font=("Fixedsys", 20))
+        title.place(x=70,y=50)
+        
+        password = StringVar() 
+        pw = Entry(back_g, textvariable=password, show='*', width=20, font=("Fixedsys", 12))
+        pw.place(x=40, y=80)
+
+        def check_pw():
+            print(password.get())
+            if password.get() == "acm1pt":
+                print("Accepted")
+            else:
+                print("Denied")
+        
+        submit = Button(back_g, command=check_pw, relief=FLAT, width=20, height=20, text="Submit",bg="red", fg="white", font=("Fixedsys", 8))
+        submit.place(x=100, y=120)
+        
     #self.button_enter.place(x=410,y=210)
     button_lan = Button(root, image=lan, command=change_lan, relief=FLAT, width=60, height=30, bg="black")
     button_lan.image = lan
     button_lan.place(x=410,y=50)
+
+    button_admin = Button(root, image=admin, command=pw_screen, relief=FLAT, width=60, height=30, bg="black")
+    button_admin.image = admin
+    button_admin.place(x=410,y=550)
     
     root.mainloop()
 

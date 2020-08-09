@@ -8,6 +8,18 @@ money = 1000
 language = True #Spanish as True, English as False
 transaccion = 1
 
+def popup(message):
+    window = Tk()
+    window.geometry("200x70+415+350")
+    window.title("Popup")
+
+    label = Label(window, text=message, font=("System", 12))
+    label.pack()
+
+    boton = Button(window, text="Cerrar", command=window.destroy)
+    boton.pack()
+    window.mainloop()
+
 def load_img(name):
     if isinstance(name, str):
         path = os.path.join("imgs", name)
@@ -22,7 +34,16 @@ class Coin():
         self.label = label
         self.machine = machine
         self.money = money
-        img = load_img("hundred.png")
+
+        if value == 25:
+            img = load_img("twenty.png")
+        elif value == 50:
+            img = load_img("fifty.png")
+        elif value == 100:
+            img = load_img("hundred.png")
+        else:
+            img = load_img("change.png")
+
         if not change:
             self.button = Button(self.master, image=img, command= self.create_thread, relief=FLAT, width=40, height=70, bg="#6AE1FF")
         else:
@@ -142,6 +163,8 @@ class Machine():
             if self.money > self.costs[self.calidad-1]:
                 self.change = self.money-self.costs[self.calidad-1]
                 self.cambio(self.money-self.costs[self.calidad-1])
+            else:
+                self.change = 0
             self.create_thread()
         else:
             print("falta harina pa, va aflojando la mica")
@@ -294,27 +317,56 @@ def main():
 
     def pw_screen():
         admin_s = Toplevel(root)
-        admin_s.geometry("300x300")
+        admin_s.geometry("500x350+250+200")
         admin_s.resizable(False, False)
-        back_g = Canvas(admin_s, width=300, height=300, borderwidth=0, highlightthickness=0, bg="blue")
+        back_g = Canvas(admin_s, width=500, height=350, borderwidth=0, highlightthickness=0, bg="blue")
         back_g.place(x=0,y=0)
 
         title = Label(back_g, text="Administrator", fg="white", bg="Blue", font=("Fixedsys", 20))
-        title.place(x=70,y=50)
+        title.place(x=150, y=50)
         
         password = StringVar() 
         pw = Entry(back_g, textvariable=password, show='*', width=20, font=("Fixedsys", 12))
-        pw.place(x=40, y=80)
+        pw.place(x=170, y=100)
+
+        def functions():
+            if language:
+                end = Button(back_g, command=end_all, relief=FLAT, width=20, height=3, text="Apagar dispensador",bg="red", fg="white", font=("Fixedsys", 8))
+                cut = Button(back_g, command=end_all, relief=FLAT, width=20, height=3, text="Reiniciar ventas",bg="red", fg="white", font=("Fixedsys", 8))
+                report = Button(back_g, command=end_all, relief=FLAT, width=20, height=3, text="Reporte de ventas",bg="red", fg="white", font=("Fixedsys", 8))
+            else:
+                end = Button(back_g, command=end_all, relief=FLAT, width=20, height=3, text="Turn off dispenser",bg="red", fg="white", font=("Fixedsys", 8))
+                cut = Button(back_g, command=end_all, relief=FLAT, width=20, height=3, text="Reset sales",bg="red", fg="white", font=("Fixedsys", 8))
+                report = Button(back_g, command=end_all, relief=FLAT, width=20, height=3, text="Sales report",bg="red", fg="white", font=("Fixedsys", 8))
+
+            end.place(x=170, y=100)
+            cut.place(x=170, y=170)
+            report.place(x=170, y=240)
+
+        def end_all():
+            admin_s.destroy()
+            root.destroy()
+
+        #def cut_sales():
+
+        #def generate_report():
 
         def check_pw():
             print(password.get())
             if password.get() == "acm1pt":
                 print("Accepted")
+                pw.destroy()
+                submit.destroy()
+                functions()
             else:
                 print("Denied")
+                popup("Clave incorrecta")
         
-        submit = Button(back_g, command=check_pw, relief=FLAT, width=20, height=20, text="Submit",bg="red", fg="white", font=("Fixedsys", 8))
-        submit.place(x=100, y=120)
+        submit = Button(back_g, command=check_pw, relief=FLAT, width=20, height=3, text="Submit",bg="red", fg="white", font=("Fixedsys", 8))
+        submit.place(x=165, y=150)
+
+        back = Button(back_g, command=admin_s.destroy, relief=FLAT, width=9, height=3, text="Back",bg="red", fg="white", font=("Fixedsys", 8))
+        back.place(x=20, y=280)
         
     #self.button_enter.place(x=410,y=210)
     button_lan = Button(root, image=lan, command=change_lan, relief=FLAT, width=60, height=30, bg="black")

@@ -8,6 +8,7 @@ money = 1000
 language = True #Spanish as True, English as False
 transaccion = 1
 
+
 def popup(message):
     window = Tk()
     window.geometry("200x70+415+350")
@@ -252,14 +253,27 @@ class Message():
         self.pay = payment
         self.change = change
         if self.quality == "Baja" or self.quality == "Low":
+            
             self.monto = 50
         elif self.quality == "Media" or self.quality == "Regular":
+            
             self.monto = 100
         else:
+            
             self.monto = 200
+        #"consejo", "dicho","chiste"
+        if self.type == "consejo":
+            self.t = 1
+        elif self.type == "dicho":
+            self.t = 2
+        else:
+            self.t = 3
+        
         self.screen = Toplevel(self.master)
         self.screen.geometry("255x100+300+300")
-        self.label_out = Label(self.screen, text=self.type + " " + self.quality, fg="black", bg="white")
+        self.code = 5
+        self.msg = self.parse_message()
+        self.label_out = Label(self.screen, text=self.msg, fg="black", bg="white")
         self.label_out.place(x=0, y=0)
 
     #def get_phrase(self):
@@ -272,6 +286,64 @@ class Message():
         self.string = str(transaccion)+"."+self.day+"."+self.time+"."+self.type+"."+str(self.monto)+"."+str(self.pay)+"."+str(self.change)+"\n"
         print(self.string)
         transaccion += 1
+
+    def parse_message(self):
+        print(self.t)
+        f = open("mensajes.txt","r")
+        words = f.read()
+        jump = 0
+        ele = 0
+        num_a = ""
+        q_found = False
+        ph_found = False
+        #end = False
+        str_out = ""
+        phrase = ""
+        change = False
+        for i in range(len(words)):
+            if jump >= 2 and words[i] != "\n":
+                if words[i].isnumeric() and ele == 0:
+                    if int(words[i]) == self.t:
+                        print("here")
+                        q_found = True
+                elif words[i].isnumeric() and ele == 1:
+                    num_a += words[i]
+                elif words[i].isalpha() and ele == 2 and ph_found:
+                    phrase += words[i]
+                elif words[i].isnumeric() and ele == 4 and ph_found:
+                    #words[i] = str(int(words[i])+1)
+                    change = True
+                elif words[i] == ".":
+                    ele += 1
+                    if ele == 2:
+                        print(num_a)
+                        if int(num_a) == self.code and q_found:
+                            print("Here!")
+                            ph_found = True
+                elif words[i] == " ":
+                    print("espacio")
+                if change:
+                    str_out += str(int(words[i])+1)
+                else:
+                    str_out += words[i]
+            elif words[i] == "\n":
+                if ph_found:
+                    str_out += words[i:]
+                    break
+                ele = 0
+                num_a = ""
+                str_out += words[i]
+                jump += 1
+            else:
+                str_out += words[i]
+
+        writef = open("mensajes.txt", "w")
+        writef.write(str_out)
+        writef.close()
+
+        return phrase
+                    
+
 
 def main():
     global money, on, language

@@ -1,0 +1,2 @@
+Formato
+Transaccion.Fecha.Hora.Tipo.Codigo.Monto.Pago.Vuelto

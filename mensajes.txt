@@ -2,55 +2,55 @@ Formato
 Tipo.Código.Mensaje.Precio.Ventas
 1.1.Afronta tus miedos.50.0
 1.2.Nunca pierdas la esperanza.50.0
-1.3.Haz ejercicio cada día.50.0
-1.4.Menos es más.50.0
-1.5.Sigue una alimentación sana.50.0
-1.6.Se lo más sociable que puedas.50.0
-1.7.Sé tú mismo sin importarte lo que los demás piensen de ti.100.0
-1.8.Resérvate un rato cada día para pensar.100.0
+1.3.Haz ejercicio cada daa.50.0
+1.4.Menos es mas.50.0
+1.5.Sigue una alimentacion sana.50.0
+1.6.Se lo mas sociable que puedas.50.0
+1.7.Se tu mismo sin importarte lo quelos demas piensen de ti.100.0
+1.8.Reservate un rato cada dia para pensar.100.0
 1.9.Busca un nuevo hobby.100.0
 1.10.Todo cambia.100.0
 1.11.Cada cosa a su tiempo y en su sitio.100.0
 1.12.Vete a dormir a una hora prudente.100.0
-1.13.Despiértate antes.200.0
-1.14.Acostúmbrate a lo inevitable.200.0
-1.15.Dedícale un tiempo cada día a pensar en la muerte.200.0
-1.16.Cada día cuando te levantes muestra gratitud por lo que tienes.200.0
-1.17.Conécete a ti mismo.200.0
-1.18.Haz bien y no mires a quién.200.0
+1.13.Despiertate antes.200.0
+1.14.Acostumbrate a lo inevitable.200.0
+1.15.Dedicale un tiempo cada dia a pensar en la muerte.200.0
+1.16.Cada dia cuando te levantes muestra gratitud por lo que tienes.200.0
+1.17.Conecete a ti mismo.200.0
+1.18.Haz bien y no mires a quien.200.0
 2.1.No hay mal que por bien no venga.50.0
 2.2.Con dinero baila el perro.50.0
-2.3.Panza llena corazón contento.50.0
+2.3.Panza llena corazon contento.50.0
 2.4.Quien duerme mucho, poco aprende.50.0
 2.5.Al mal tiempo buena cara.50.0
 2.6.Al pan, pan y al vino, vino.50.0
-2.7.Si el río suena piedras trae.100.0
+2.7.Si el rio suena piedras trae.100.0
 2.8.El que no corre, vuela.100.0
-2.9.No hay mal que dure cien años.100.0
+2.9.No hay mal que dure cien anos.100.0
 2.10.A caballo regalado no se le mira el diente.100.0
-2.11.Cría cuervos y te sacarán los ojos.100.0
+2.11.Cria cuervos y te sacaran los ojos.100.0
 2.12.Cada loco con su tema y cada lobo por su senda.100.0
-2.13.A palabras necias, oídos sordos.200.0
+2.13.A palabras necias, oidos sordos.200.0
 2.14.A buen entendedor pocas palabras bastan.200.0
 2.15.En boca del mentiroso, lo cierto es dudoso.200.0
 2.16.El que mucho abarca poco aprieta.200.0
 2.17.Hierba mala nunca muere.200.0
 2.18.No hay peor ciego que el que no quiere ver.200.0
-3.1.¿Cuál es el país que cabe en una tortilla? Chile.50.0
-3.2.¿Cómo queda un mago después de comer? Magordito.50.0
-3.3.Hola, ¿está Agustín? No, estoy incomodín.50.0
-3.4.Me picó una serpiente ¿Cobra? No, fue de gratis.50.0
-3.5.¿Para que van las cajas al gimnasio? Para volverse cajas fuertes.50.0
-3.6.¿Por qué se suicidó el libro de matemáticas? Tenía muchos problemas.50.0
-3.7.¿Qué le dice un techo a otro techo? Techo de menos.100.0
-3.8.¿Qué hace un perro con un taladro? Ta ladrando.100.0
-3.9.¿En qué se convierte un país sin tacos? Un país destacado.100.0
-3.10.Llega el helio y le ayuda a una anciana a cruzar la calle Se ve que es un gas noble.100.0
-3.11.¿Qué son 50 físicos y 50 químicos juntos? 100tíficos.100.0
-3.12.Hola, ¿tienen libros para el cansancio? Está agotados.100.0
-3.13.¿Qué hace un taco en una cama? Ta costado.200.0
-3.14.Está una pizza llorando en un funeral y llega otra y le pregunta ¿Era familiar?\nNo, era mediana.200.0
-3.15.¿Por qué no se puede discutir con un Dj? Porque siempre está cambiando de tema.200.0
-3.16.¿Por qué los adivinos no pueden tener hijos? Porque tienen las bolas de cristal.200.0
-3.17.¿Sabes que le dice un .gif a un .jpg? ¡Anímate hombre!.200.0
-3.18.¿Cuántos psicológos se necesitan para cambiar un bombillo? Depende si el bombillo quiere cambiar.200.0
+3.1.Cual es el pais que cabe en una tortilla? Chile.50.0
+3.2.Como queda un mago despues de comer? Magordito.50.0
+3.3.Hola, esta Agustin? No, estoy incomodin.50.0
+3.4.Me pico una serpiente Cobra? No, fue de gratis.50.0
+3.5.Para que van las cajas al gimnasio? Para volverse cajas fuertes.50.0
+3.6.Por que se suicido el libro de matematicas? Tenia muchos problemas.50.0
+3.7.Que le dice un techo a otro techo? Techo de menos.100.0
+3.8.Que hace un perro con un taladro? Ta ladrando.100.0
+3.9.En que se convierte un pais sin tacos? Un pais destacado.100.0
+3.10.Llega el helio y le ayuda a una anciana a cruzar la calle, se ve que es un gas noble.100.0
+3.11.Que son 50 fisicos y 50 quimicos juntos? 100tíficos.100.0
+3.12.Hola, tienen libros para el cansancio? Estan agotados.100.0
+3.13.Que hace un taco en una cama? Ta costado.200.0
+3.14.Esta una pizza llorando en un funeral y llega otra y le pregunta Era familiar?No, era mediana.200.0
+3.15.Por que no se puede discutir con un Dj? Porque siempre esta cambiando de tema.200.0
+3.16.Por que los adivinos no pueden tener hijos? Porque tienen las bolas de cristal.200.0
+3.17.Sabes que le dice un gif a un jpg? Animate hombre!.200.0
+3.18.Cuantos psicologos se necesitan para cambiar un bombillo? Depende si el bombillo quiere cambiar.200.0

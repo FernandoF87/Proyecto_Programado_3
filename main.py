@@ -6,7 +6,6 @@ from threading import Thread
 on = True
 money = 1000
 language = True #Spanish as True, English as False
-transaccion = 1
 
 
 def popup(message):
@@ -253,13 +252,10 @@ class Message():
         self.pay = payment
         self.change = change
         if self.quality == "Baja" or self.quality == "Low":
-            
             self.monto = 50
         elif self.quality == "Media" or self.quality == "Regular":
-            
             self.monto = 100
         else:
-            
             self.monto = 200
         #"consejo", "dicho","chiste"
         if self.type == "consejo":
@@ -273,6 +269,7 @@ class Message():
         self.screen.geometry("255x100+300+300")
         self.code = 5
         self.msg = self.parse_message()
+        print(self.msg)
         self.label_out = Label(self.screen, text=self.msg, fg="black", bg="white")
         self.label_out.place(x=0, y=0)
 
@@ -282,10 +279,31 @@ class Message():
         global transaccion
         self.date = datetime.now()
         self.day = self.date.strftime("%d/%m/%Y")
-        self.time = self.date.strftime("%H:%M:")
-        self.string = str(transaccion)+"."+self.day+"."+self.time+"."+self.type+"."+str(self.monto)+"."+str(self.pay)+"."+str(self.change)+"\n"
-        print(self.string)
-        transaccion += 1
+        self.time = self.date.strftime("%H:%M")
+        self.parse_receipt()
+
+    def parse_receipt(self):
+        f = open("facturas.txt", "r")
+        words = f.read()
+        jump = 0
+        str_out = ""
+        transaction = -1
+        for i in range(len(words)):
+            if jump >= 2 and words[i] != "\n":
+                str_out += words[i]
+            elif words[i] == "\n":
+                str_out += words[i]
+                jump += 1
+                transaction += 1
+            else:
+                str_out += words[i]
+
+        str_out += str(transaction) + "."+self.day+"."+self.time+"."+self.type+"."+str(self.monto)+"."+str(self.pay)+"."+str(self.change)+"\n"
+
+        writef = open("facturas.txt", "w")
+        writef.write(str_out)
+        writef.close()
+
 
     def parse_message(self):
         print(self.t)
@@ -322,6 +340,7 @@ class Message():
                             ph_found = True
                 elif words[i] == " ":
                     print("espacio")
+                    phrase += " "
                 if change:
                     str_out += str(int(words[i])+1)
                 else:
@@ -342,7 +361,6 @@ class Message():
         writef.close()
 
         return phrase
-                    
 
 
 def main():
@@ -404,12 +422,12 @@ def main():
         def functions():
             if language:
                 end = Button(back_g, command=end_all, relief=FLAT, width=20, height=3, text="Apagar dispensador",bg="red", fg="white", font=("Fixedsys", 8))
-                cut = Button(back_g, command=end_all, relief=FLAT, width=20, height=3, text="Reiniciar ventas",bg="red", fg="white", font=("Fixedsys", 8))
-                report = Button(back_g, command=end_all, relief=FLAT, width=20, height=3, text="Reporte de ventas",bg="red", fg="white", font=("Fixedsys", 8))
+                cut = Button(back_g, command=cut_sales, relief=FLAT, width=20, height=3, text="Reiniciar ventas",bg="red", fg="white", font=("Fixedsys", 8))
+                report = Button(back_g, command=generate_report, relief=FLAT, width=20, height=3, text="Reporte de ventas",bg="red", fg="white", font=("Fixedsys", 8))
             else:
                 end = Button(back_g, command=end_all, relief=FLAT, width=20, height=3, text="Turn off dispenser",bg="red", fg="white", font=("Fixedsys", 8))
-                cut = Button(back_g, command=end_all, relief=FLAT, width=20, height=3, text="Reset sales",bg="red", fg="white", font=("Fixedsys", 8))
-                report = Button(back_g, command=end_all, relief=FLAT, width=20, height=3, text="Sales report",bg="red", fg="white", font=("Fixedsys", 8))
+                cut = Button(back_g, command=cut_sales, relief=FLAT, width=20, height=3, text="Reset sales",bg="red", fg="white", font=("Fixedsys", 8))
+                report = Button(back_g, command=generate_report, relief=FLAT, width=20, height=3, text="Sales report",bg="red", fg="white", font=("Fixedsys", 8))
 
             end.place(x=170, y=100)
             cut.place(x=170, y=170)
@@ -419,9 +437,71 @@ def main():
             admin_s.destroy()
             root.destroy()
 
-        #def cut_sales():
+        def cut_sales():
+            f = open("mensajes.txt", "r")
+            words = f.read()
+            jump = 0
+            str_out = ""
+            restarted = False
+            for i in range(len(words)):
+                if jump >= 2 and words[i] != "\n":
+                    if words[i].isnumeric() and ele == 4:
+                        if not restarted:
+                            str_out += "0"
+                            restarted = True
+                    elif words[i] == ".":
+                        str_out += words[i]
+                        ele += 1
+                    else:
+                        str_out += words[i]
+                elif words[i] == "\n":
+                    ele = 0
+                    str_out += words[i]
+                    jump += 1
+                    restarted = False
+                else:
+                    str_out += words[i]
 
-        #def generate_report():
+            writef = open("mensajes.txt", "w")
+            writef.write(str_out)
+            writef.close()
+
+            f = open("facturas.txt", "r")
+            words = f.read()
+            jump = 0
+            str_out = ""
+            for i in range(len(words)):
+                if jump < 2:
+                    str_out += words[i]
+                    if words[i] == "\n":
+                        jump += 1
+                else:
+                    break
+
+            writef = open("facturas.txt", "w")
+            writef.write(str_out)
+            writef.close()
+
+            print("Ventas reiniciadas")
+
+        def generate_report():
+            f = open("mensajes.txt", "r")
+            words = f.read()
+            jump = 0
+            str_out = ""
+            for i in range(len(words)):
+                if jump >= 2:
+                    if words[i] != ".":
+                        str_out += words[i]
+                    else:
+                        str_out += " "
+                elif words[i] == "\n":
+                    jump += 1
+
+            report = Toplevel(admin_s)
+            label = Label(report, text=str_out)
+            label.pack()
+            report.mainloop()
 
         def check_pw():
             print(password.get())

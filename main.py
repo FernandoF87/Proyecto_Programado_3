@@ -284,9 +284,9 @@ class Message():
         self.bg.place(x=0,y=0)
         self.bg.picture = self.bkgr
         self.label_tit = Label(self.screen, text=self.title, fg="green", bg="white",  font=("Bodoni MT", 14))
-        self.label_tit.place(x=120, y=20)
-        self.label_out = Label(self.screen, text=self.msg, fg="green", bg="white",  font=("Bodoni MT", 10), justify=LEFT)
-        self.label_out.place(x=30, y=45)
+        self.label_tit.place(x=130, y=20)
+        self.label_out = Label(self.screen, text=self.msg, fg="green", bg="white",  font=("Bodoni MT", 10), justify=CENTER)
+        self.label_out.place(x=80, y=45)
 
         #self.screen.mainloop()
 
@@ -344,7 +344,10 @@ class Message():
                 elif words[i].isnumeric() and ele == 1:
                     num_a += words[i]
                 elif words[i] != "." and ele == 2 and ph_found:
-                    phrase += words[i]
+                    if words[i] == "/":
+                        phrase += "\n"
+                    else:
+                        phrase += words[i]
                 elif words[i].isnumeric() and ele == 4 and ph_found:
                     #words[i] = str(int(words[i])+1)
                     change = True

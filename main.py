@@ -285,8 +285,8 @@ class Message():
         self.bg.picture = self.bkgr
         self.label_tit = Label(self.screen, text=self.title, fg="green", bg="white",  font=("Bodoni MT", 14))
         self.label_tit.place(x=120, y=20)
-        self.label_out = Label(self.screen, text=self.msg, fg="green", bg="white",  font=("Bodoni MT", 10))
-        self.label_out.place(x=10, y=45)
+        self.label_out = Label(self.screen, text=self.msg, fg="green", bg="white",  font=("Bodoni MT", 10), justify=LEFT)
+        self.label_out.place(x=30, y=45)
 
         #self.screen.mainloop()
 
@@ -514,7 +514,7 @@ def main():
                     jump += 1
 
             report = Toplevel(admin_s)
-            label = Label(report, text=str_out)
+            label = Label(report, text=str_out, justify=LEFT)
             label.pack()
             report.mainloop()
 

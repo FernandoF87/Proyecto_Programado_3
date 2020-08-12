@@ -280,12 +280,13 @@ class Message():
         self.msg = self.parse_message()
         #print(self.msg)
         self.bg = Canvas(self.screen, width=400, height=100, borderwidth=0, highlightthickness=0, bg="white")
-        self.bg.create_image(0,0, anchor=NW, image=self.bkgr)
+        self.picture = self.bg.create_image(0,0, anchor=NW, image=self.bkgr)
         self.bg.place(x=0,y=0)
+        self.bg.picture = self.bkgr
         self.label_tit = Label(self.screen, text=self.title, fg="green", bg="white",  font=("Bodoni MT", 14))
         self.label_tit.place(x=120, y=20)
         self.label_out = Label(self.screen, text=self.msg, fg="green", bg="white",  font=("Bodoni MT", 10))
-        self.label_out.place(x=10, y=40)
+        self.label_out.place(x=10, y=45)
 
         #self.screen.mainloop()
 

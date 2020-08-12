@@ -1,5 +1,5 @@
 from tkinter import *
-import os, time
+import os, time, random
 from datetime import datetime, date
 from threading import Thread
 
@@ -252,26 +252,42 @@ class Message():
         self.pay = payment
         self.change = change
         if self.quality == "Baja" or self.quality == "Low":
+            self.code = random.randint(1,7)
             self.monto = 50
         elif self.quality == "Media" or self.quality == "Regular":
+            self.code = random.randint(7,13)
             self.monto = 100
         else:
+            self.code = random.randint(13,19)
             self.monto = 200
         #"consejo", "dicho","chiste"
         if self.type == "consejo":
+            self.title = "Consejo"
+            self.bkgr = load_img("consejo.png")
             self.t = 1
         elif self.type == "dicho":
+            self.title = "Dicho"
+            self.bkgr = load_img("dicho.png")
             self.t = 2
         else:
+            self.title = "Chiste"
+            self.bkgr = load_img("chiste.png")
             self.t = 3
+
         
         self.screen = Toplevel(self.master)
-        self.screen.geometry("255x100+300+300")
-        self.code = 5
+        self.screen.geometry("400x100")
         self.msg = self.parse_message()
-        print(self.msg)
-        self.label_out = Label(self.screen, text=self.msg, fg="black", bg="white")
-        self.label_out.place(x=0, y=0)
+        #print(self.msg)
+        self.bg = Canvas(self.screen, width=400, height=100, borderwidth=0, highlightthickness=0, bg="white")
+        self.bg.create_image(0,0, anchor=NW, image=self.bkgr)
+        self.bg.place(x=0,y=0)
+        self.label_tit = Label(self.screen, text=self.title, fg="green", bg="white",  font=("Bodoni MT", 14))
+        self.label_tit.place(x=120, y=20)
+        self.label_out = Label(self.screen, text=self.msg, fg="green", bg="white",  font=("Bodoni MT", 10))
+        self.label_out.place(x=10, y=40)
+
+        #self.screen.mainloop()
 
     #def get_phrase(self):
 
@@ -322,11 +338,11 @@ class Message():
             if jump >= 2 and words[i] != "\n":
                 if words[i].isnumeric() and ele == 0:
                     if int(words[i]) == self.t:
-                        print("here")
+                        #print("here")
                         q_found = True
                 elif words[i].isnumeric() and ele == 1:
                     num_a += words[i]
-                elif words[i].isalpha() and ele == 2 and ph_found:
+                elif words[i] != "." and ele == 2 and ph_found:
                     phrase += words[i]
                 elif words[i].isnumeric() and ele == 4 and ph_found:
                     #words[i] = str(int(words[i])+1)
@@ -334,13 +350,11 @@ class Message():
                 elif words[i] == ".":
                     ele += 1
                     if ele == 2:
-                        print(num_a)
+                        #print(num_a)
                         if int(num_a) == self.code and q_found:
-                            print("Here!")
+                            #print("Here!")
                             ph_found = True
-                elif words[i] == " ":
-                    print("espacio")
-                    phrase += " "
+                
                 if change:
                     str_out += str(int(words[i])+1)
                 else:

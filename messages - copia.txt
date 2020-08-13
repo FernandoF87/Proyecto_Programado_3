@@ -1,0 +1,56 @@
+Formato
+Tipo.Código.Mensaje.Precio.Ventas
+1.1.Better late than never.50.0
+1.2.Always put your best foot forward.50.0
+1.3.An apple a day keeps the doctor away.50.0
+1.4.Write it on your heart that every day/is the best day in the year.50.0
+1.5.Meditate.50.0
+1.6.Love yourself.50.0
+1.7.Don't count the days, make the days count.100.0
+1.8.Live simply, love generously.100.0
+1.9.Learn to rest, not to quit.100.0
+1.10.Wanting a sign is a sign.100.0
+1.11.Take the risk or lose the chance.100.0
+1.12.Your future needs you, /your past does not.100.0
+1.13.To handle yourself, use your head;/ to handle others, use your heart.200.0
+1.14.Anything you cannot control is teaching you/ How to let go.200.0
+1.15.Run mad as often as you choose, but do not faint.200.0
+1.16.Dream as if you will live forever;/Live as if you will die today.200.0
+1.17.Everything in moderation, including moderation.200.0
+1.18.Think before you speak. Read before you think.200.0
+2.1.A bird in hand is worth two in the bush.50.0
+2.2.Adversity and loss make a man wise.50.0
+2.3.A fool and his money are soon parted.50.0
+2.4.A leopard can’t change its spots.50.0
+2.5.All good things come to an end.50.0
+2.6.All that glitters is not gold.50.0
+2.7.Actions speak louder than words.100.0
+2.8.All’s fair in love and war.100.0
+2.9.An empty vessel makes much noise.100.0
+2.10.A picture is worth a thousand words.100.0
+2.11.A ship in the harbor is safe,/but that is not what a ship is for.100.0
+2.12.All’s well that ends well.100.0
+2.13.A bad workman always blames his tools.200.0
+2.14.A drowning man will clutch at a straw.200.0
+2.15.An idle brain is the devil’s workshop.200.0
+2.16.A journey of thousand miles/begins with a single step.200.0
+2.17.A chain is only as strong as its weakest link.200.0
+2.18.Absence makes the heart grow fonder.200.0
+3.1.You know what I saw today? Everything I looked at.50.0
+3.2.Why are ghosts such bad liars?/Because they are easy to see through.50.0
+3.3.What did one plate say to his friend?/Tonight, dinner's on me.50.0
+3.4.I tried to sure the airport for misplacing my luggage/I lost my case.50.0
+3.5.What did one traffic light say to the other?/Stop looking! I am changing!.50.0
+3.6.I was wondering why the frisbee was getting bigger,/then it hit me.50.0
+3.7.Two artists had an art contest/It ended in a draw.100.0
+3.8.I have many jokes about unemployed people,/sadly none of them work.100.0
+3.9.Why was six afraid of seven?/Because seven ate nine.100.0
+3.10.How do trees get online? They just log on.100.0
+3.11.Why are skeletons so calm? Because nothing gets under their skin.100.0
+3.12.What's a foot long and slippery? A slipper.100.0
+3.13.Want to hear a construction joke?/Oh never mind, I'm still working on that one.200.0
+3.14.What do you call bears with no ears? B.200.0
+3.15.What's red and moves up and down?/A tomato in an elevator.200.0
+3.16.Time flies like an arrow, fruit flies like a banana.200.0
+3.17.A Buddhist walks up to a hotdog stand and says,/"Make me one with everything".200.0
+3.18.This is your captain speaking,/AND THIS IS YOUR CAPTAIN SHOUTING.200.0

@@ -122,9 +122,9 @@ class Machine():
         self.seleccion = ["consejo", "dicho","chiste"]
         
         if language:
-            self.calidades = ["NE","Baja","Media", "Alta"]
+            self.calidades = ["-","Baja","Media", "Alta"]
         else:
-            self.calidades = ["NE","Low","Regular", "High"]
+            self.calidades = ["-","Low","Regular", "High"]
             
         self.label = label
         self.label_money = label_money
@@ -149,13 +149,13 @@ class Machine():
     def up_arrow(self):
         if self.arrow_pos > 1:
             self.arrow_pos -= 1
-            self.current_y -= 25
+            self.current_y -= 30
             self.label_arrow.place(x=90,y=self.current_y)
             
     def down_arrow(self):
         if self.arrow_pos < 3:
             self.arrow_pos += 1
-            self.current_y += 25
+            self.current_y += 30
             self.label_arrow.place(x=90,y=self.current_y)
             
     def purchase(self):
@@ -190,7 +190,7 @@ class Machine():
         if language:
             self.label.config(text=self.string+"\n\n1.Consejos"+"\n\n2.Dichos"+"\n\n3.Chistes")
         else:
-            self.label.config(text=self.string+"\n\n1.Advice"+"\n\n2.Saying"+"\n\n3.Gag")
+            self.label.config(text=self.string+"\n\n1.Advice"+"\n\n2.Idiom"+"\n\n3.Gag")
         self.label.place(x=80,y=90)
 
     def reset(self):
@@ -232,10 +232,10 @@ class Machine():
     def change_lan(self):
         global language  
         if language:
-            self.calidades = ["NE","Baja","Media", "Alta"]
+            self.calidades = ["-","Baja","Media", "Alta"]
             self.string = "Monto actual: "+str(self.money)+"   Calidad: "+self.calidades[self.calidad]
         else:
-            self.calidades = ["NE","Low","Regular", "High"]
+            self.calidades = ["-","Low","Regular", "High"]
             self.string = "Current amount: "+str(self.money)+"  Quality: "+self.calidades[self.calidad]
             
         if not self.init:
@@ -245,6 +245,7 @@ class Machine():
 
 class Message():
     def __init__(self, master, type, quality, payment, change):
+        global language
         self.master = master
         self.type = type
         self.quality = quality
@@ -262,15 +263,27 @@ class Message():
             self.monto = 200
         #"consejo", "dicho","chiste"
         if self.type == "consejo":
-            self.title = "Consejo"
+            if language:
+                self.title = "Consejo"
+            else:
+                self.title = "Advice"
+            self.color = "blue"
             self.bkgr = load_img("consejo.png")
             self.t = 1
         elif self.type == "dicho":
-            self.title = "Dicho"
+            if language:
+                self.title = "Dicho"
+            else:
+                self.title = "Idiom"
+            self.color = "red"
             self.bkgr = load_img("dicho.png")
             self.t = 2
         else:
-            self.title = "Chiste"
+            if language:
+                self.title = "Chiste"
+            else:
+                self.title = "Gag"
+            self.color = "green"
             self.bkgr = load_img("chiste.png")
             self.t = 3
 
@@ -283,9 +296,9 @@ class Message():
         self.picture = self.bg.create_image(0,0, anchor=NW, image=self.bkgr)
         self.bg.place(x=0,y=0)
         self.bg.picture = self.bkgr
-        self.label_tit = Label(self.screen, text=self.title, fg="green", bg="white",  font=("Bodoni MT", 14))
+        self.label_tit = Label(self.screen, text=self.title, fg=self.color, bg="white",  font=("Bodoni MT", 14))
         self.label_tit.place(x=130, y=20)
-        self.label_out = Label(self.screen, text=self.msg, fg="green", bg="white",  font=("Bodoni MT", 10), justify=CENTER)
+        self.label_out = Label(self.screen, text=self.msg, fg=self.color, bg="white",  font=("Bodoni MT", 10), justify=CENTER)
         self.label_out.place(x=80, y=45)
 
         #self.screen.mainloop()
@@ -315,7 +328,7 @@ class Message():
             else:
                 str_out += words[i]
 
-        str_out += str(transaction) + "."+self.day+"."+self.time+"."+self.type+"."+str(self.monto)+"."+str(self.pay)+"."+str(self.change)+"\n"
+        str_out += str(transaction) + "."+self.day+"."+self.time+"."+self.title+"."+str(self.monto)+"."+str(self.pay)+"."+str(self.change)+"\n"
 
         writef = open("facturas.txt", "w")
         writef.write(str_out)
@@ -323,8 +336,12 @@ class Message():
 
 
     def parse_message(self):
+        global language
         print(self.t)
-        f = open("mensajes.txt","r")
+        if language:
+            f = open("mensajes.txt","r")
+        else:
+            f = open("messages.txt","r")
         words = f.read()
         jump = 0
         ele = 0
@@ -373,8 +390,10 @@ class Message():
                 jump += 1
             else:
                 str_out += words[i]
-
-        writef = open("mensajes.txt", "w")
+        if language:
+            writef = open("mensajes.txt", "w")
+        else:
+            writef = open("messages.txt", "w")
         writef.write(str_out)
         writef.close()
 
@@ -457,33 +476,44 @@ def main():
 
         def cut_sales():
             f = open("mensajes.txt", "r")
+            f2 = open("messages.txt", "r")
             words = f.read()
             jump = 0
             str_out = ""
+            str_out_aux = ""
             restarted = False
-            for i in range(len(words)):
-                if jump >= 2 and words[i] != "\n":
-                    if words[i].isnumeric() and ele == 4:
-                        if not restarted:
-                            str_out += "0"
-                            restarted = True
-                    elif words[i] == ".":
+            for x in range(0,2):
+                for i in range(len(words)):
+                    if jump >= 2 and words[i] != "\n":
+                        if words[i].isnumeric() and ele == 4:
+                            if not restarted:
+                                str_out += "0"
+                                restarted = True
+                        elif words[i] == ".":
+                            str_out += words[i]
+                            ele += 1
+                        else:
+                            str_out += words[i]
+                    elif words[i] == "\n":
+                        ele = 0
                         str_out += words[i]
-                        ele += 1
+                        jump += 1
+                        restarted = False
                     else:
                         str_out += words[i]
-                elif words[i] == "\n":
-                    ele = 0
-                    str_out += words[i]
-                    jump += 1
-                    restarted = False
-                else:
-                    str_out += words[i]
+                if x == 0:
+                    str_out_aux = str_out
+                    str_out = ""
+                    words = f2.read()
 
             writef = open("mensajes.txt", "w")
-            writef.write(str_out)
+            writef.write(str_out_aux)
             writef.close()
 
+            writef2 = open("messages.txt", "w")
+            writef2.write(str_out)
+            writef2.close()
+            
             f = open("facturas.txt", "r")
             words = f.read()
             jump = 0
@@ -504,20 +534,61 @@ def main():
 
         def generate_report():
             f = open("mensajes.txt", "r")
+            f2 = open("messages.txt", "r")
             words = f.read()
             jump = 0
+            #ele = 0
             str_out = ""
-            for i in range(len(words)):
-                if jump >= 2:
-                    if words[i] != ".":
-                        str_out += words[i]
+            #reading = False
+            #save = False
+            params = []
+            mat_out = []
+            #for i in range(len(words)):
+            #    if jump >= 2:
+            #        if words[i] != ".":
+            #            str_out += words[i]
+            #        else:
+            #            str_out += " "
+            #    elif words[i] == "\n":
+            #        jump += 1
+            for x in range(2):
+                for i in range(len(words)):
+                    if jump >= 2 and words[i] != "\n":
+                        if words[i] == ".":
+                            params += [str_out]
+                            #ele += 1
+                            str_out = ""
+                        elif words[i] != ".":
+                            str_out += words[i]
+                            
+                    elif words[i] == "\n":
+                        if jump >= 2 and int(str_out) > 0:
+                            params += [str_out]
+                            mat_out += [params]
+                        params = []
+                        str_out = ""
+                        #ele = 0
+                        jump += 1
+                        #reading = True
+                params = []
+                jump = 0
+                words = f2.read()
+            
+            print(mat_out)
+            to_write = ""
+            for i in mat_out:
+                for j in range(len(i)):
+                    if j != 4:
+                        to_write += i[j]+"    "
                     else:
-                        str_out += " "
-                elif words[i] == "\n":
-                    jump += 1
+                        to_write += str(int(i[3])*int(i[4]))+"    "
+                to_write += "\n"
 
+            print(to_write)
+                    
+            
             report = Toplevel(admin_s)
-            label = Label(report, text=str_out, justify=LEFT)
+            label = Label(report, text=to_write, justify=LEFT)
             label.pack()
             report.mainloop()
 

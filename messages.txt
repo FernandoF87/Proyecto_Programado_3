@@ -11,7 +11,7 @@ Tipo.Código.Mensaje.Precio.Ventas
 1.9.Learn to rest, not to quit.100.0
 1.10.Wanting a sign is a sign.100.0
 1.11.Take the risk or lose the chance.100.0
-1.12.Your future needs you, /your past does not.100.0
+1.12.Your future needs you, /your past does not.100.1
 1.13.To handle yourself, use your head;/ to handle others, use your heart.200.0
 1.14.Anything you cannot control is teaching you/ How to let go.200.0
 1.15.Run mad as often as you choose, but do not faint.200.0
@@ -42,7 +42,7 @@ Tipo.Código.Mensaje.Precio.Ventas
 3.4.I tried to sure the airport for misplacing my luggage/I lost my case.50.0
 3.5.What did one traffic light say to the other?/Stop looking! I am changing!.50.0
 3.6.I was wondering why the frisbee was getting bigger,/then it hit me.50.0
-3.7.Two artists had an art contest/It ended in a draw.100.0
+3.7.Two artists had an art contest/It ended in a draw.100.1
 3.8.I have many jokes about unemployed people,/sadly none of them work.100.0
 3.9.Why was six afraid of seven?/Because seven ate nine.100.0
 3.10.How do trees get online? They just log on.100.0

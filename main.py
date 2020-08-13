@@ -90,9 +90,11 @@ class Coin():
             else:
                 self.money.config(text="Available money: ₡ " + str(money))
         else:
-            print("Mirá capo estás re limpio, andate a la concha de tu vieja bld")
-    #Idea para eliminar los botones segun el dinero faltante
-    #if self.available < self.valor: kill
+            if language:
+                popup("No tiene suficientes fondos")
+            else:
+                popup("Not enough funds")
+
     def erase(self):
         global money, language
         money += self.value
@@ -170,7 +172,10 @@ class Machine():
                 self.change = 0
             self.create_thread()
         else:
-            print("falta harina pa, va aflojando la mica")
+            if language:
+                popup("Por favor ingresar más dinero")
+            else:
+                popup("Please insert more money")
             
     def add_money(self, value):
         global language
@@ -290,11 +295,9 @@ class Message():
             self.bkgr = load_img("chiste.png")
             self.t = 3
 
-        
         self.screen = Toplevel(self.master)
         self.screen.geometry("400x100")
         self.msg = self.parse_message()
-        #print(self.msg)
         self.bg = Canvas(self.screen, width=400, height=100, borderwidth=0, highlightthickness=0, bg="white")
         self.picture = self.bg.create_image(0,0, anchor=NW, image=self.bkgr)
         self.bg.place(x=0,y=0)
@@ -302,11 +305,7 @@ class Message():
         self.label_tit = Label(self.screen, text=self.title, fg=self.color, bg="white",  font=("Bodoni MT", 14))
         self.label_tit.place(x=130, y=20)
         self.label_out = Label(self.screen, text=self.msg, fg=self.color, bg="white",  font=("Bodoni MT", 10), justify=CENTER)
-        self.label_out.place(x=80, y=45)
-
-        #self.screen.mainloop()
-
-    #def get_phrase(self):
+        self.label_out.place(x=70, y=45)
 
     def register_receipt(self):
         global transaccion
@@ -340,7 +339,6 @@ class Message():
 
     def parse_message(self):
         global language
-        print(self.t)
         if language:
             f = open("mensajes.txt","r")
         else:
@@ -351,7 +349,6 @@ class Message():
         num_a = ""
         q_found = False
         ph_found = False
-        #end = False
         str_out = ""
         phrase = ""
         change = False
@@ -359,7 +356,6 @@ class Message():
             if jump >= 2 and words[i] != "\n":
                 if words[i].isnumeric() and ele == 0:
                     if int(words[i]) == self.t:
-                        #print("here")
                         q_found = True
                 elif words[i].isnumeric() and ele == 1:
                     num_a += words[i]
@@ -369,14 +365,11 @@ class Message():
                     else:
                         phrase += words[i]
                 elif words[i].isnumeric() and ele == 4 and ph_found:
-                    #words[i] = str(int(words[i])+1)
                     change = True
                 elif words[i] == ".":
                     ele += 1
                     if ele == 2:
-                        #print(num_a)
                         if int(num_a) == self.code and q_found:
-                            #print("Here!")
                             ph_found = True
                 
                 if change:
@@ -419,7 +412,6 @@ def main():
     machine.place(x=0,y=0)
     user.place(x=500,y=0)
 
-    #₡
     label = Label(machine, text="Bienvenido, \ninserte una moneda", fg="#38C3FF" ,bg="blue", font=("Fixedsys", 16))
 
     label_money = Label(machine, text="Dinero disponible: ₡ 1000", bg="#6AE1FF", font=("Haettenschweiler", 16))
@@ -534,7 +526,10 @@ def main():
             writef.write(str_out)
             writef.close()
 
-            print("Ventas reiniciadas")
+            if language:
+                popup("Ventas reiniciadas")
+            else:
+                popup("Sales restarted")
 
         def generate_report():
             f = open("mensajes.txt", "r")
@@ -580,8 +575,7 @@ def main():
                 params = []
                 jump = 0
                 words = f2.read()
-            
-            print(mat_out)
+
             if language:
                 to_write = "Tipo   Codigo\tMensaje\t\t\t\t\t\t\t\t\t\t\tMensajes vendidos   Monto ventas\n"
             else:
@@ -600,8 +594,6 @@ def main():
                         to_write += "₡" + str(int(i[3])*int(i[4]))+"\t"
                 to_write += "\n"
 
-            print(to_write)
-                    
             
             report = Toplevel(admin_s)
             report.title("Report")
@@ -610,14 +602,11 @@ def main():
             report.mainloop()
 
         def check_pw():
-            print(password.get())
             if password.get() == "acm1pt":
-                print("Accepted")
                 pw.destroy()
                 submit.destroy()
                 functions()
             else:
-                print("Denied")
                 if language:
                     popup("Clave incorrecta")
                 else:

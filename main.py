@@ -597,7 +597,9 @@ def main():
             
             report = Toplevel(admin_s)
             report.title("Report")
-            label = Label(report, text=to_write, justify=LEFT, font=("Fixedsys", 8))
+            bkground = Canvas(report, width=1000, height=1000, borderwidth=0, highlightthickness=0, bg="#001B78")
+            bkground.place(x=0, y=0)
+            label = Label(report, text=to_write, justify=LEFT, font=("Fixedsys", 8), fg="white", bg="#001B78")
             label.pack()
             report.mainloop()
 

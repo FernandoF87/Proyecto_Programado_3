@@ -5,7 +5,7 @@ Tipo.Código.Mensaje.Precio.Ventas
 1.3.Haz ejercicio cada daa.50.0
 1.4.Menos es mas.50.0
 1.5.Sigue una alimentacion sana.50.0
-1.6.Se lo mas sociable que puedas.50.0
+1.6.Se lo mas sociable que puedas.50.1
 1.7.Se tu mismo sin importarte lo que/los demas piensen de ti.100.0
 1.8.Reservate un rato cada dia para pensar.100.0
 1.9.Busca un nuevo hobby.100.0

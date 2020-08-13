@@ -16,7 +16,10 @@ def popup(message):
     label = Label(window, text=message, font=("System", 12))
     label.pack()
 
-    boton = Button(window, text="Cerrar", command=window.destroy)
+    if language:
+        boton = Button(window, text="Cerrar", command=window.destroy)
+    else:
+        boton = Button(window, text="Exit", command=window.destroy)
     boton.pack()
     window.mainloop()
 
@@ -446,6 +449,7 @@ def main():
         admin_s = Toplevel(root)
         admin_s.geometry("500x350+250+200")
         admin_s.resizable(False, False)
+        admin_s.title("Admin")
         back_g = Canvas(admin_s, width=500, height=350, borderwidth=0, highlightthickness=0, bg="blue")
         back_g.place(x=0,y=0)
 
@@ -559,7 +563,10 @@ def main():
                             #ele += 1
                             str_out = ""
                         elif words[i] != ".":
-                            str_out += words[i]
+                            if words[i] != "/":
+                                str_out += words[i]
+                            else:
+                                str_out += " "
                             
                     elif words[i] == "\n":
                         if jump >= 2 and int(str_out) > 0:
@@ -575,20 +582,30 @@ def main():
                 words = f2.read()
             
             print(mat_out)
-            to_write = ""
+            if language:
+                to_write = "Tipo   Codigo\tMensaje\t\t\t\t\t\t\t\t\t\t\tMensajes vendidos   Monto ventas\n"
+            else:
+                to_write = "Type   Code  \tMessage\t\t\t\t\t\t\t\t\t\t\tMessages sold       Amount in sales\n"
             for i in mat_out:
                 for j in range(len(i)):
                     if j != 4:
-                        to_write += i[j]+"    "
+                        if j == 2:
+                            while len(i[j]) < 94:
+                                i[j] += " "
+                        if j != 3:
+                            to_write += i[j] + "\t"
+                        else:
+                            to_write += i[4] + "\t\t"
                     else:
-                        to_write += str(int(i[3])*int(i[4]))+"    "
+                        to_write += "₡" + str(int(i[3])*int(i[4]))+"\t"
                 to_write += "\n"
 
             print(to_write)
                     
             
             report = Toplevel(admin_s)
-            label = Label(report, text=to_write, justify=LEFT)
+            report.title("Report")
+            label = Label(report, text=to_write, justify=LEFT, font=("Fixedsys", 8))
             label.pack()
             report.mainloop()
 
@@ -601,7 +618,10 @@ def main():
                 functions()
             else:
                 print("Denied")
-                popup("Clave incorrecta")
+                if language:
+                    popup("Clave incorrecta")
+                else:
+                    popup("Wrong password")
         
         submit = Button(back_g, command=check_pw, relief=FLAT, width=20, height=3, text="Submit",bg="red", fg="white", font=("Fixedsys", 8))
         submit.place(x=165, y=150)

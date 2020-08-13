@@ -6,13 +6,13 @@ Tipo.Código.Mensaje.Precio.Ventas
 1.4.Menos es mas.50.0
 1.5.Sigue una alimentacion sana.50.0
 1.6.Se lo mas sociable que puedas.50.0
-1.7.Se tu mismo sin importarte lo que/los demas piensen de ti.100.0
+1.7.Se tu mismo sin importarte lo que/los demas piensen de ti.100.1
 1.8.Reservate un rato cada dia para pensar.100.0
-1.9.Busca un nuevo hobby.100.0
-1.10.Todo cambia.100.0
-1.11.Cada cosa a su tiempo y en su sitio.100.0
-1.12.Vete a dormir a una hora prudente.100.1
-1.13.Despiertate antes.200.0
+1.9.Busca un nuevo hobby.100.3
+1.10.Todo cambia.100.1
+1.11.Cada cosa a su tiempo y en su sitio.100.2
+1.12.Vete a dormir a una hora prudente.100.2
+1.13.Despiertate antes.200.1
 1.14.Acostumbrate a lo inevitable.200.0
 1.15.Dedicale un tiempo cada dia/a pensar en la muerte.200.0
 1.16.Cada dia cuando te levantes/muestra gratitud por lo que tienes.200.0
@@ -42,7 +42,7 @@ Tipo.Código.Mensaje.Precio.Ventas
 3.4.Me pico una serpiente Cobra?/No, fue de gratis.50.0
 3.5.Para que van las cajas al gimnasio?/Para volverse cajas fuertes.50.0
 3.6.Por que se suicido el libro de matematicas?/Tenia muchos problemas.50.0
-3.7.Que le dice un techo a otro techo?/Techo de menos.100.1
+3.7.Que le dice un techo a otro techo?/Techo de menos.100.0
 3.8.Que hace un perro con un taladro?/Ta ladrando.100.0
 3.9.En que se convierte un pais sin tacos?/Un pais destacado.100.0
 3.10.Llega el helio y le ayuda a una anciana a cruzar la calle,/se ve que es un gas noble.100.0

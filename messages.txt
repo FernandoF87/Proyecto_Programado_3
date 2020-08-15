@@ -6,7 +6,7 @@ Tipo.Código.Mensaje.Precio.Ventas
 1.4.Write it on your heart that every day/is the best day in the year.50.0
 1.5.Meditate.50.0
 1.6.Love yourself.50.0
-1.7.Don't count the days, make the days count.100.0
+1.7.Do not count the days, make the days count.100.0
 1.8.Live simply, love generously.100.0
 1.9.Learn to rest, not to quit.100.0
 1.10.Wanting a sign is a sign.100.0
@@ -25,11 +25,11 @@ Tipo.Código.Mensaje.Precio.Ventas
 2.5.All good things come to an end.50.0
 2.6.All that glitters is not gold.50.0
 2.7.Actions speak louder than words.100.0
-2.8.All’s fair in love and war.100.0
+2.8.All is fair in love and war.100.0
 2.9.An empty vessel makes much noise.100.0
 2.10.A picture is worth a thousand words.100.0
 2.11.A ship in the harbor is safe,/but that is not what a ship is for.100.0
-2.12.All’s well that ends well.100.0
+2.12.All is well that ends well.100.0
 2.13.A bad workman always blames his tools.200.0
 2.14.A drowning man will clutch at a straw.200.0
 2.15.An idle brain is the devil’s workshop.200.0
@@ -47,10 +47,10 @@ Tipo.Código.Mensaje.Precio.Ventas
 3.9.Why was six afraid of seven?/Because seven ate nine.100.0
 3.10.How do trees get online? They just log on.100.0
 3.11.Why are skeletons so calm? Because nothing gets under their skin.100.0
-3.12.What's a foot long and slippery? A slipper.100.0
+3.12.What is a foot long and slippery? A slipper.100.0
 3.13.Want to hear a construction joke?/Oh never mind, I'm still working on that one.200.0
 3.14.What do you call bears with no ears? B.200.0
-3.15.What's red and moves up and down?/A tomato in an elevator.200.0
+3.15.What is red and moves up and down?/A tomato in an elevator.200.0
 3.16.Time flies like an arrow, fruit flies like a banana.200.0
 3.17.A Buddhist walks up to a hotdog stand and says,/"Make me one with everything".200.0
 3.18.This is your captain speaking,/AND THIS IS YOUR CAPTAIN SHOUTING.200.0
